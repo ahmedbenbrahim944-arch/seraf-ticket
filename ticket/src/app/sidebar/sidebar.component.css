@@ -1,0 +1,481 @@
+/* sidebarus.component.css */
+.print-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.print-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle, rgba(74, 52, 212, 0.08) 0%, transparent 70%),
+    radial-gradient(circle at 70% 30%, rgba(120, 119, 198, 0.06) 0%, transparent 50%);
+  animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Titre animé */
+.print-title {
+    font-size: 72px;
+    font-weight: 800;
+    color: #090D75;
+    margin-bottom: 60px;
+    letter-spacing: -1px;
+    animation: titleFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: lowercase;
+    position: relative;
+    z-index: 10;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes titleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Grille des boutons */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    max-height: calc(100vh - 250px);
+    position: relative;
+    z-index: 10;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* Scrollbar personnalisée */
+.buttons-grid::-webkit-scrollbar {
+    width: 12px;
+}
+
+.buttons-grid::-webkit-scrollbar-track {
+    background: rgba(9, 13, 117, 0.1);
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.buttons-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #090D75, #2021B3);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.buttons-grid::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2021B3, #4a34d4);
+    box-shadow: 0 0 10px rgba(9, 13, 117, 0.5);
+}
+
+/* Pour Firefox */
+.buttons-grid {
+    scrollbar-width: thin;
+    scrollbar-color: #090D75 rgba(9, 13, 117, 0.1);
+}
+
+/* Bouton de déconnexion qui prend toute la largeur en bas */
+.logout-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Styles des boutons */
+.print-button {
+    background: linear-gradient(135deg, #090D75, #2021B3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 40px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 10px 40px rgba(9, 13, 117, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: buttonSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    backdrop-filter: blur(10px);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.print-button:nth-child(1) { animation-delay: 0.1s; }
+.print-button:nth-child(2) { animation-delay: 0.2s; }
+.print-button:nth-child(3) { animation-delay: 0.3s; }
+.print-button:nth-child(4) { animation-delay: 0.4s; }
+.print-button:nth-child(5) { animation-delay: 0.5s; }
+.print-button:nth-child(6) { animation-delay: 0.6s; }
+.print-button:nth-child(7) { animation-delay: 0.7s; }
+.print-button:nth-child(8) { animation-delay: 0.8s; }
+.print-button:nth-child(9) { animation-delay: 0.9s; }
+
+@keyframes buttonSlideIn {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Effet de hover */
+.print-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.print-button:hover::before {
+    left: 100%;
+}
+
+.print-button:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 
+        0 20px 60px rgba(9, 13, 117, 0.5),
+        0 0 30px rgba(32, 33, 179, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #2021B3, #4a34d4);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.print-button:active {
+    transform: translateY(-4px) scale(1.01);
+    transition: all 0.1s ease;
+}
+
+/* Effet ripple */
+.button-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    pointer-events: none;
+}
+
+.print-button:active .button-ripple {
+    animation: rippleAnimation 0.6s ease-out;
+}
+
+@keyframes rippleAnimation {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Bouton de déconnexion */
+.logout-button {
+    background: linear-gradient(135deg, #ff3b30, #ff6b6b);
+    color: white;
+    max-width: 500px;
+    padding: 30px 60px;
+    animation-delay: 1s;
+    border: 2px solid rgba(255, 59, 48, 0.3);
+    box-shadow: 0 8px 25px rgba(255, 59, 48, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.logout-button:hover {
+    background: linear-gradient(135deg, #ff6b6b, #ff3b30);
+    box-shadow: 
+        0 20px 60px rgba(255, 59, 48, 0.4),
+        0 0 30px rgba(255, 59, 48, 0.3);
+    border-color: rgba(255, 59, 48, 0.5);
+}
+
+/* Éléments décoratifs animés */
+.background-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(9, 13, 117, 0.08), transparent);
+    animation: floatAnimation 8s ease-in-out infinite;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.circle-2 {
+    width: 200px;
+    height: 200px;
+    top: 60%;
+    right: 10%;
+    animation-delay: 2s;
+}
+
+.circle-3 {
+    width: 150px;
+    height: 150px;
+    bottom: 15%;
+    left: 15%;
+    animation-delay: 4s;
+}
+
+@keyframes floatAnimation {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-30px) scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+/* Particules lumineuses */
+.light-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(9, 13, 117, 0.4);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(9, 13, 117, 0.6);
+    animation: particleFloat 6s ease-in-out infinite;
+}
+
+.particle-1 {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.particle-2 {
+    top: 40%;
+    right: 25%;
+    animation-delay: 1.5s;
+}
+
+.particle-3 {
+    bottom: 30%;
+    left: 30%;
+    animation-delay: 3s;
+}
+
+.particle-4 {
+    top: 70%;
+    right: 15%;
+    animation-delay: 4.5s;
+}
+
+.particle-5 {
+    top: 50%;
+    left: 50%;
+    animation-delay: 2.5s;
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(50px);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .print-title {
+        font-size: 56px;
+        margin-bottom: 40px;
+    }
+    
+    .buttons-grid {
+        gap: 20px;
+    }
+    
+    .print-button {
+        font-size: 24px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .print-container {
+        padding: 40px 20px;
+    }
+    
+    .print-title {
+        font-size: 48px;
+        margin-bottom: 30px;
+    }
+    
+    .buttons-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 15px;
+    }
+    
+    .print-button {
+        font-size: 20px;
+        padding: 25px;
+        min-height: 100px;
+    }
+    
+    .logout-button {
+        padding: 25px 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .print-title {
+        font-size: 36px;
+    }
+    
+    .print-button {
+        font-size: 18px;
+        padding: 20px;
+        min-height: 80px;
+    }
+    
+    .logout-button {
+        padding: 20px 30px;
+        font-size: 18px;
+    }
+}
+
+/* Support pour le mode réduit de mouvement */
+@media (prefers-reduced-motion: reduce) {
+    .print-button,
+    .print-title,
+    .floating-circle,
+    .light-particle,
+    .print-container::before {
+        animation: none !important;
+    }
+    
+    .print-button {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .print-title {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Amélioration de l'accessibilité */
+.print-button:focus-visible {
+    outline: 3px solid rgba(9, 13, 117, 0.5);
+    outline-offset: 4px;
+}
+
+.print-button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* État de chargement */
+.print-container.loading .print-button {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* Animation au clic */
+@keyframes clickPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(9, 13, 117, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(9, 13, 117, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(9, 13, 117, 0);
+    }
+}
+
+.print-button.clicked {
+    animation: clickPulse 0.6s ease-out;
+}
+
+/* État actif pour les boutons */
+.print-button.active {
+    background: linear-gradient(135deg, #4a34d4, #7877c6);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 15px 45px rgba(74, 52, 212, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.print-button.active:hover {
+    background: linear-gradient(135deg, #7877c6, #4a34d4);
+}

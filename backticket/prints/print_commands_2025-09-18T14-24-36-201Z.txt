@@ -1,0 +1,22 @@
+
+# Commandes TSPL générées le 18/09/2025 15:24:36
+# À envoyer manuellement à l'imprimante TSC
+# 
+# Instructions:
+# 1. Copiez le contenu ci-dessous
+# 2. Utilisez un outil comme Putty ou Hyperterminal 
+# 3. Connectez-vous à votre imprimante (USB/Série/Réseau)
+# 4. Collez les commandes
+#
+# Commandes TSPL:
+SIZE 17 mm, 10 mm
+GAP 2 mm, 0
+SPEED 4
+DENSITY 8
+REFERENCE 0,0
+CLS
+QRCODE 1,1,H,100,A,0,"Z38000604078M0040"
+TEXT 100,100,"1",0,1,1,"00060"
+TEXT 100,100,"1",0,1,1,"L04-RXT1-RA5246801"
+PRINT 1,1
+      

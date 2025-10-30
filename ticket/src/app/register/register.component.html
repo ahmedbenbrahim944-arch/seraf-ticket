@@ -1,0 +1,101 @@
+<!-- register.component.html -->
+<div class="register-container">
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+      <!-- Sidebar avec formulaire -->
+      <div class="col-lg-4 col-md-5 col-sm-6 sidebar-section">
+        <div class="sidebar-content">
+          <div class="form-container">
+            <div class="form-header">
+              <h3 class="form-title">Créer un compte Admin</h3>
+              <button class="btn-back" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+              </button>
+            </div>
+            
+            <form (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  placeholder="Nom" 
+                  [(ngModel)]="admin.nom"
+                  name="nom" 
+                  required>
+                <div class="error-message" *ngIf="!admin.nom && errorMessage">
+                  Le nom est requis
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  placeholder="Prénom" 
+                  [(ngModel)]="admin.prenom"
+                  name="prenom" 
+                  required>
+                <div class="error-message" *ngIf="!admin.prenom && errorMessage">
+                  Le prénom est requis
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <input 
+                  type="password" 
+                  class="form-input" 
+                  placeholder="Mot de passe" 
+                  [(ngModel)]="admin.password"
+                  name="password" 
+                  required
+                  minlength="6">
+                <div class="error-message" *ngIf="admin.password && admin.password.length < 6 && errorMessage">
+                  Le mot de passe doit contenir au moins 6 caractères
+                </div>
+              </div>
+              
+              <button 
+                type="submit" 
+                class="btn-submit" 
+                [disabled]="isLoading">
+                <span *ngIf="!isLoading">Créer le compte</span>
+                <span *ngIf="isLoading">Création...</span>
+                <div class="btn-ripple"></div>
+              </button>
+              
+              <!-- Message de succès -->
+              <div class="success-message" *ngIf="successMessage">
+                <i class="bi bi-check-circle"></i>
+                {{ successMessage }}
+                <p>Redirection vers la page de connexion...</p>
+              </div>
+              
+              <!-- Message d'erreur -->
+              <div class="error-message server-error" *ngIf="errorMessage">
+                <i class="bi bi-exclamation-circle"></i>
+                {{ errorMessage }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Section de bienvenue -->
+      <div class="col-lg-8 col-md-7 col-sm-6 welcome-section">
+        <div class="welcome-content">
+          <div class="welcome-text">
+            <h1 class="welcome-title">
+              <span class="title-line">Création</span>
+              <span class="title-line">Compte Admin</span>
+            </h1>
+            <div class="decorative-elements">
+              <div class="floating-dot dot-1"></div>
+              <div class="floating-dot dot-2"></div>
+              <div class="floating-dot dot-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

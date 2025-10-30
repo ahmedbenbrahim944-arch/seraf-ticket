@@ -1,0 +1,250 @@
+<div class="print-container">
+  <div class="form-wrapper">
+    <div class="form-container large-form">
+      <div class="form-header">
+        <h3 class="form-title">Imprimer ticket XT3</h3>
+        <button class="btn-back" (click)="goBack()" title="Retour">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+      </div>
+       <div class="materials-section">
+  <h4 class="materials-title">Matériels utilisés</h4>
+  <div class="materials-container">
+    <!-- RESIN RIBBON -->
+    <div class="material-item">
+      <div class="material-title"> RESIN RIBBON</div>
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/110x300-mt-ribon.jpg')">
+        <img src="assets/images/110x300-mt-ribon.jpg" 
+             alt="Energy Stand" 
+             class="material-image"
+             title="PUSH ENERGY STAND">
+      </div>
+    </div>
+    
+    <!-- Tickets -->
+    <div class="material-item">
+      <div class="material-title"> TICKETS</div>
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/ChatGPT Image 22 oct. 2025, 15_49_08.png')">
+        <img src="assets/images/ChatGPT Image 22 oct. 2025, 15_49_08.png"
+             alt="Energy Stand 2"
+             class="material-image"
+             title="PUSH ENERGY STAND">
+      </div>
+    </div>
+    
+    <!-- Ajuster tickets -->
+    <div class="material-item">
+      <div class="material-title"> AJUSTER TICKETS</div>
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/Se Connecter.png')">
+        <img src="assets/images/Se Connecter.png"
+             alt="Matériel supplémentaire"
+             class="material-image"
+             title="Matériel supplémentaire">
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- Modal pour l'image agrandie -->
+      <div class="image-modal-overlay" *ngIf="showImageModal" (click)="closeImageModal()">
+        <div class="image-modal-content" (click)="$event.stopPropagation()">
+          <button class="btn-close-modal" (click)="closeImageModal()" aria-label="Fermer l'image">
+            <i class="bi bi-x"></i>
+          </button>
+          <img [src]="selectedImage" alt="Image agrandie" class="enlarged-image">
+        </div>
+      </div>
+      <!-- Avertissement de changement de semaine -->
+      <div class="week-warning-banner" *ngIf="weekChangeDetected" role="alert">
+        <div class="warning-icon">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <div class="warning-content">
+          <h4 class="warning-title">⚠️ Changement de Semaine Détecté</h4>
+          <p class="warning-message">
+            Semaine actuelle : <strong>{{ weekChangeInfo.currentWeek }}</strong>
+            <i class="bi bi-arrow-right mx-2"></i>
+            Nouvelle semaine : <strong>{{ weekChangeInfo.newWeek }}</strong>
+          </p>
+          <p class="warning-detail">
+            <i class="bi bi-info-circle"></i>
+            Le numéro progressif sera automatiquement remis à <strong>0001</strong>
+          </p>
+        </div>
+      </div>
+
+      <form (ngSubmit)="onPrint()" #printForm="ngForm">
+        <!-- Ligne -->
+        <div class="form-group">
+          <label for="selectedLigne" class="form-label">
+            Ligne <span class="required-asterisk">*</span>
+          </label>
+         <select 
+            id="selectedLigne"
+            class="form-input" 
+            [(ngModel)]="selectedLigne"
+            name="selectedLigne" 
+            (change)="onLigneChange()"
+            required
+            aria-required="true">
+            <option value="L22:GBXT3">L22:GBXT3</option>
+          </select>
+          <div class="form-hint">
+            Ligne prédéfinie pour GBXT3 - Non modifiable
+          </div>
+        </div>
+
+        <!-- Référence -->
+        <div class="form-group">
+          <label for="selectedReference" class="form-label">
+            Référence <span class="required-asterisk">*</span>
+          </label>
+          <select 
+            id="selectedReference"
+            class="form-input large-input" 
+            [(ngModel)]="selectedReference"
+            name="selectedReference" 
+            (change)="onReferenceChange()"
+            [disabled]="!selectedLigne"
+            required
+            aria-required="true">
+            <option value="">Sélectionnez une référence</option>
+            <option *ngFor="let reference of references" [value]="reference">
+              {{ reference }}
+            </option>
+          </select>
+        </div>
+
+        <!-- SimpleNum Prévisualisation -->
+        <div class="form-group">
+          <label for="simpleNumPreview" class="form-label">SimpleNum Généré</label>
+          <input 
+            id="simpleNumPreview"
+            type="text" 
+            class="form-input large-input simple-num-preview" 
+            [(ngModel)]="simpleNumPreview"
+            name="simpleNumPreview" 
+            readonly
+            placeholder="SimpleNum sera généré automatiquement">
+          <div class="form-hint">
+            Format: 3 derniers chiffres référence + semaine + année + code société
+          </div>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+          <label for="selectedDate" class="form-label">Date</label>
+          <input 
+            id="selectedDate"
+            type="date" 
+            class="form-input large-input" 
+            [(ngModel)]="selectedDate"
+            name="selectedDate" 
+            (change)="onDateChange()"
+            required>
+        </div>
+
+        <!-- Matricule -->
+        
+        <!-- N° Progressive -->
+        
+
+        <!-- Quantité -->
+        <div class="form-group">
+          <label for="quantite" class="form-label">
+            Quantité <span class="required-asterisk">*</span>
+          </label>
+          <input 
+            id="quantite"
+            type="number" 
+            class="form-input large-input" 
+            [(ngModel)]="quantite"
+            name="quantite" 
+            min="1"
+            max="1000"
+            required
+            placeholder="Nombre de tickets à imprimer">
+        </div>
+
+        <!-- Boutons -->
+        <div class="button-group">
+          <button 
+            type="button" 
+            class="btn-cancel large-btn" 
+            (click)="onCancel()">
+            <i class="bi bi-x-circle"></i> 
+            <span>Annuler</span>
+          </button>
+          
+          <button 
+            type="submit" 
+            class="btn-print large-btn"
+            [disabled]="isLoading">
+            <i class="bi bi-printer"></i>
+            <span *ngIf="!isLoading">Imprimer SimpleNum</span>
+            <span *ngIf="isLoading">Génération...</span>
+          </button>
+        </div>
+        
+        <div class="error-message server-error" *ngIf="errorMessage" role="alert">
+          <i class="bi bi-exclamation-triangle"></i>
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Dialogue de résultat d'impression -->
+<div class="print-result-overlay" *ngIf="showPrintResult" role="dialog">
+  <div class="print-result-dialog large-dialog">
+    <div class="dialog-header">
+      <h3>Impression SimpleNum réussie</h3>
+      <button class="btn-close" (click)="closePrintResult()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    
+    <div class="dialog-body">
+      <div class="print-success-message">
+        <i class="bi bi-check-circle-fill"></i>
+        <p>{{ printResult?.data?.summary?.totalTickets }} tickets SimpleNum imprimés</p>
+      </div>
+      
+      <div class="print-summary">
+        <h4>Résumé :</h4>
+        <ul>
+          <li><strong>Plage progressive :</strong> {{ printResult?.data?.summary?.progressiveRange }}</li>
+          <li><strong>SimpleNum générés :</strong> </li>
+          <li><strong>Ligne :</strong> {{ printResult?.data?.summary?.productInfo?.ligne }}</li>
+          <li><strong>Référence :</strong> {{ printResult?.data?.summary?.productInfo?.reference }}</li>
+        </ul>
+      </div>
+      
+      <div class="tickets-preview">
+        <h4>Aperçu des SimpleNum :</h4>
+        <div class="simple-num-container">
+          <div class="simple-num-item" *ngFor="let ticket of printedTickets.slice(0, 10)">
+            <div class="simple-num-code">
+              {{ getSimpleNumFromTicket(ticket) }}
+            </div>
+            <div class="ticket-info">
+              <div class="ticket-progressive">{{ ticket.progressiveNumber }}</div>
+              <div class="ticket-reference">{{ ticket.ligne }}-{{ ticket.reference }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tickets-more" *ngIf="printedTickets.length > 10">
+          <p>... et {{ printedTickets.length - 10 }} tickets supplémentaires</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dialog-footer">
+      <button class="btn-primary large-btn" (click)="closePrintResult()">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>

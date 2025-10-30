@@ -1,0 +1,47 @@
+<!-- landing.component.html -->
+<div class="landing-container">
+  <app-signature></app-signature>
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+      <!-- Sidebar avec les boutons -->
+      <div class="col-lg-4 col-md-5 col-sm-6 sidebar-section">
+        <div class="sidebar-content">
+          <div class="button-container">
+            <button class="btn btn-custom btn-connect"
+                   routerLink="/login"
+                    (click)="onConnect()"
+                    [class.active]="activeButton === 'connect'">
+              <span class="btn-text">Se Connecter</span>
+              <div class="btn-ripple"></div>
+            </button>
+            
+            <button class="btn btn-custom btn-register" 
+                    routerLink="/register"
+                    (click)="onRegister()"
+                    [class.active]="activeButton === 'register'">
+              <span class="btn-text">S'inscrire</span>
+              <div class="btn-ripple"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Section de bienvenue -->
+      <div class="col-lg-8 col-md-7 col-sm-6 welcome-section">
+        <div class="welcome-content">
+          <div class="welcome-text">
+            <h1 class="welcome-title">
+              <span class="title-line">Bienvenue</span>
+              <span class="title-line">Seraf Tunisie</span>
+            </h1>
+            <div class="decorative-elements">
+              <div class="floating-dot dot-1"></div>
+              <div class="floating-dot dot-2"></div>
+              <div class="floating-dot dot-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

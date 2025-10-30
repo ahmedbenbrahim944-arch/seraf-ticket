@@ -1,0 +1,207 @@
+<!-- sidebarus.component.html -->
+<div class="print-container" role="main" aria-label="Menu d'impression">
+  
+  <!-- Header avec section droite (logo + déconnexion) -->
+  <header class="header-container">
+    <!-- Section droite: Logo + Bouton de déconnexion -->
+    <div class="header-right">
+      <img 
+        src="assets/images/Image1.png" 
+        alt="Logo de l'entreprise" 
+        class="logo-image"
+      />
+      <button 
+        class="logout-button"
+        role="button"
+        (click)="onLogoutClick()"
+        aria-label="Se déconnecter">
+        <span>Déconnexion</span>
+        <div class="button-ripple" aria-hidden="true"></div>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Conteneur principal avec titre vertical et grille -->
+  <div class="main-content">
+    <!-- Titre vertical à gauche -->
+    <h1 class="vertical-title">
+
+      <span class="letter">I</span>
+      <span class="letter">M</span>
+      <span class="letter">P</span>
+      <span class="letter">R</span>
+      <span class="letter">E</span>
+      <span class="letter">S</span>
+      <span class="letter">S</span>
+      <span class="letter">I</span>
+      <span class="letter">O</span>
+      <span class="letter">N</span>
+    </h1>
+    
+    <!-- Grille de boutons -->
+    <div class="buttons-grid" role="navigation" aria-label="Options d'impression">
+      
+      <!-- Colonne 1 -->
+      <div class="button-column">
+        <!-- Bouton Comondo XT5 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'comando-xt5'"
+          routerLink="/CHXT5"
+          (click)="onButtonClick('comando-xt5', '/CHXT5')"
+          [attr.aria-pressed]="activeItem === 'comando-xt5'"
+          aria-label="Imprimer Comondo XT5">
+          <span>L33:COM XT5</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+        
+        <!-- Bouton Polo -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'module-xt5'"
+          routerLink="/CHP"
+          (click)="onButtonClick('module-xt5', '/CHP')"
+          [attr.aria-pressed]="activeItem === 'module-xt5'"
+          aria-label="Imprimer Polo">
+          <span>L34:POLO XT5</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+        
+        <!-- Bouton Groupo Base XT4 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'groupo-xt4'"
+          routerLink="/XT4"
+          (click)="onButtonClick('groupo-xt4', '/XT4')"
+          [attr.aria-pressed]="activeItem === 'groupo-xt4'"
+          aria-label="Imprimer Groupo Base XT4">
+          <span>L32:GBXT4</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+        
+        <!-- Bouton MXT6 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'mxt6'"
+          routerLink="/MXT6"
+          (click)="onButtonClick('mxt6', '/MXT6')"
+          [attr.aria-pressed]="activeItem === 'mxt6'"
+          aria-label="Imprimer MXT6">
+          <span>L37:MXT6</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+
+        <!-- Bouton ST7 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'st7'"
+          routerLink="/CHT7"
+          (click)="onButtonClick('st7', '/CHT7')"
+          [attr.aria-pressed]="activeItem === 'st7'"
+          aria-label="Imprimer ST7">
+          <span>L35:COMST7</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+<!-- Bouton GBXT3 -->
+              <button 
+        class="print-button"
+        role="button"
+        [class.active]="activeItem === 'gbxt3'"
+        routerLink="/XT3"
+        (click)="onButtonClick('gbxt3', '/XT3')"
+        [attr.aria-pressed]="activeItem === 'gbxt3'"
+        aria-label="Imprimer GBXT3">
+        <span>L22:GBXT3</span>
+        <div class="button-ripple" aria-hidden="true"></div>
+      </button>
+      </div>
+
+
+      <!-- Colonne 2 -->
+      <div class="button-column">
+        <!-- Bouton Comondo XT7 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'comando-xt7'"
+          routerLink="/CHXT7"
+          (click)="onButtonClick('comando-xt7', '/CHXT7')"
+          [attr.aria-pressed]="activeItem === 'comando-xt7'"
+          aria-label="Imprimer Comondo XT7">
+          <span>L21:COM X1T7N0</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+        
+        <!-- Bouton Groupo Base XT2 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'groupo-xt2'"
+          routerLink="/XT2"
+          (click)="onButtonClick('groupo-xt2', '/XT2')"
+          [attr.aria-pressed]="activeItem === 'groupo-xt2'"
+          aria-label="Imprimer Groupo Base XT2">
+          <span>L29:GBXT2</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+
+        <!-- Bouton MXT5 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 'mxt5'"
+          routerLink="/MXT5"
+          (click)="onButtonClick('mxt5', '/MXT5')"
+          [attr.aria-pressed]="activeItem === 'mxt5'"
+          aria-label="Imprimer MXT5">
+          <span>L36:MXT5</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+        
+        <!-- Bouton T4T5 -->
+        <button 
+          class="print-button"
+          role="button"
+          [class.active]="activeItem === 't4t5'"
+          routerLink="/CHT4"
+          (click)="onButtonClick('t4t5', '/CHT4')"
+          [attr.aria-pressed]="activeItem === 't4t5'"
+          aria-label="Imprimer T4T5">
+          <span>L19:COM T4T5</span>
+          <div class="button-ripple" aria-hidden="true"></div>
+        </button>
+        <!-- Bouton MT5A3 -->
+<button 
+  class="print-button"
+  role="button"
+  [class.active]="activeItem === 'mt5a3'"
+  routerLink="/MT5A3"
+  (click)="onButtonClick('mt5a3', '/MT5A3')"
+  [attr.aria-pressed]="activeItem === 'mt5a3'"
+  aria-label="Imprimer MT5A3">
+  <span>L15:MT5A3</span>
+  <div class="button-ripple" aria-hidden="true"></div>
+</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Éléments décoratifs de fond -->
+  <div class="background-decoration" aria-hidden="true">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    
+    <div class="light-particle particle-1"></div>
+    <div class="light-particle particle-2"></div>
+    <div class="light-particle particle-3"></div>
+    <div class="light-particle particle-4"></div>
+    <div class="light-particle particle-5"></div>
+  </div>
+
+</div>

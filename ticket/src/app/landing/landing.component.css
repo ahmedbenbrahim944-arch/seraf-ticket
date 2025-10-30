@@ -1,0 +1,678 @@
+/* landing.component.css - Version Responsive Améliorée */
+
+.landing-container {
+  min-height: 100vh;
+  background: #2021B3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Effet de grille animée en arrière-plan */
+.landing-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Particules flottantes ambiantes */
+.landing-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(120, 119, 198, 0.4) 0%, transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%);
+  animation: ambientPulse 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes ambientPulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+.sidebar-section {
+  background: linear-gradient(145deg, #090D75 0%, #0a0e80 100%);
+  box-shadow: 
+    20px 0 80px rgba(0, 0, 0, 0.4),
+    inset -1px 0 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+/* Effet de lumière verticale animée */
+.sidebar-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 2px;
+  height: 200%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  animation: lightScan 4s ease-in-out infinite;
+}
+
+@keyframes lightScan {
+  0%, 100% { transform: translateY(-50%); opacity: 0; }
+  50% { transform: translateY(0); opacity: 1; }
+}
+
+/* Effet de brillance diagonale */
+.sidebar-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.sidebar-content {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+  padding: 40px 20px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  max-width: 280px;
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.btn-custom {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 18px 45px;
+  width: 100%;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  letter-spacing: 1px;
+}
+
+/* Effet de balayage lumineux diagonal */
+.btn-custom::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -150%;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Effet de lignes parallèles animées */
+.btn-custom::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.03) 10px,
+    rgba(255, 255, 255, 0.03) 20px
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.btn-custom:hover::before {
+  left: 150%;
+}
+
+.btn-custom:hover::after {
+  opacity: 1;
+}
+
+.btn-custom:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(10px) translateY(-3px);
+  box-shadow: 
+    -10px 15px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-custom:active {
+  transform: translateX(10px) translateY(-1px);
+  box-shadow: 
+    -5px 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn-custom.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    0 0 30px rgba(255, 255, 255, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.2);
+  animation: activePulse 2s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.3); }
+  50% { box-shadow: 0 0 50px rgba(255, 255, 255, 0.7), inset 0 2px 0 rgba(255, 255, 255, 0.5); }
+}
+
+.btn-text {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-custom:hover .btn-text {
+  transform: scale(1.05);
+}
+
+/* Effet d'onde au clic */
+.btn-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.btn-custom:active .btn-ripple {
+  width: 400px;
+  height: 400px;
+}
+
+.welcome-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de vagues animées */
+.welcome-section::before {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(ellipse at center, rgba(74, 52, 212, 0.08) 0%, transparent 60%);
+  animation: waveRotate 25s linear infinite;
+}
+
+@keyframes waveRotate {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Effet de lignes diagonales animées */
+.welcome-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 100px,
+    rgba(9, 13, 117, 0.02) 100px,
+    rgba(9, 13, 117, 0.02) 200px
+  );
+  animation: diagonalMove 15s linear infinite;
+}
+
+@keyframes diagonalMove {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(200px) translateY(200px); }
+}
+
+.welcome-content {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px;
+}
+
+.welcome-text {
+  text-align: center;
+  position: relative;
+}
+
+.welcome-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  color: #090D75;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(9, 13, 117, 0.1);
+  position: relative;
+  letter-spacing: -1px;
+}
+
+.title-line {
+  display: block;
+  animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+/* Effet de surbrillance sur le texte */
+.title-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(9, 13, 117, 0.1),
+    transparent
+  );
+  animation: textShine 3s ease-in-out infinite;
+}
+
+@keyframes textShine {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
+}
+
+.title-line:nth-child(2) {
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.title-line:nth-child(2)::before {
+  animation-delay: 0.3s;
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) scale(0.9);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.decorative-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.floating-dot {
+  position: absolute;
+  background: linear-gradient(135deg, #090D75, #2021B3);
+  opacity: 0.5;
+  box-shadow: 0 0 20px rgba(9, 13, 117, 0.5);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.dot-1 {
+  width: 25px;
+  height: 25px;
+  top: 15%;
+  left: -5%;
+  animation: float1 7s ease-in-out infinite;
+}
+
+.dot-2 {
+  width: 18px;
+  height: 18px;
+  top: 70%;
+  right: 0%;
+  animation: float2 9s ease-in-out infinite;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.dot-3 {
+  width: 30px;
+  height: 30px;
+  top: 35%;
+  right: 8%;
+  animation: float3 8s ease-in-out infinite;
+}
+
+.dot-1::after,
+.dot-2::after,
+.dot-3::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0.3;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+@keyframes float1 {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) rotate(0deg); 
+  }
+  33% { 
+    transform: translateY(-30px) translateX(15px) rotate(120deg); 
+  }
+  66% { 
+    transform: translateY(15px) translateX(-10px) rotate(240deg); 
+  }
+}
+
+@keyframes float2 {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-25px) translateX(-15px) rotate(180deg); 
+  }
+}
+
+@keyframes float3 {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1); 
+  }
+  25% { 
+    transform: translateY(20px) translateX(-12px) rotate(90deg) scale(1.1); 
+  }
+  75% { 
+    transform: translateY(-15px) translateX(18px) rotate(270deg) scale(0.9); 
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - AMÉLIORATIONS MAJEURES
+   ============================================ */
+
+/* Tablettes (iPad, etc.) */
+@media (max-width: 991px) {
+  .sidebar-content,
+  .welcome-content {
+    min-height: 60vh;
+    padding: 30px 20px;
+  }
+  
+  .welcome-title {
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+  }
+  
+  .button-container {
+    gap: 2rem;
+    max-width: 260px;
+  }
+  
+  .btn-custom {
+    font-size: 1rem;
+    padding: 16px 40px;
+  }
+}
+
+/* Tablettes en mode paysage et petits écrans */
+@media (max-width: 768px) {
+  .landing-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-section {
+    order: 2;
+    box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.4);
+  }
+  
+  .welcome-section {
+    order: 1;
+  }
+  
+  .sidebar-content,
+  .welcome-content {
+    min-height: 50vh;
+    padding: 30px 20px;
+  }
+  
+  .button-container {
+    flex-direction: row;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  
+  .btn-custom {
+    min-width: 160px;
+    max-width: 200px;
+    padding: 15px 30px;
+    font-size: 0.95rem;
+    flex: 0 1 auto;
+  }
+  
+  .btn-custom:hover {
+    transform: translateY(-3px);
+  }
+  
+  .welcome-title {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+  
+  .floating-dot {
+    transform: scale(0.8);
+  }
+}
+
+/* Smartphones en mode paysage */
+@media (max-width: 576px) and (orientation: landscape) {
+  .sidebar-content,
+  .welcome-content {
+    min-height: 100vh;
+    padding: 20px 15px;
+  }
+  
+  .button-container {
+    flex-direction: row;
+    gap: 1.2rem;
+  }
+  
+  .btn-custom {
+    min-width: 140px;
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+  
+  .welcome-title {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+  }
+}
+
+/* Smartphones en mode portrait */
+@media (max-width: 576px) and (orientation: portrait) {
+  .landing-container {
+    min-height: 100vh;
+  }
+  
+  .sidebar-content {
+    min-height: 40vh;
+    padding: 25px 15px;
+  }
+  
+  .welcome-content {
+    min-height: 60vh;
+    padding: 30px 15px;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+  
+  .btn-custom {
+    width: 100%;
+    max-width: 280px;
+    min-width: unset;
+    padding: 16px 35px;
+    font-size: 1rem;
+  }
+  
+  .welcome-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    padding: 0 10px;
+  }
+  
+  .floating-dot {
+    display: none;
+  }
+  
+  /* Réduire les animations sur mobile pour la performance */
+  .landing-container::before,
+  .landing-container::after,
+  .welcome-section::before,
+  .welcome-section::after {
+    animation: none;
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 380px) {
+  .sidebar-content {
+    min-height: 35vh;
+    padding: 20px 10px;
+  }
+  
+  .welcome-content {
+    min-height: 65vh;
+    padding: 25px 10px;
+  }
+  
+  .button-container {
+    gap: 1.2rem;
+  }
+  
+  .btn-custom {
+    max-width: 260px;
+    padding: 14px 30px;
+    font-size: 0.95rem;
+  }
+  
+  .welcome-title {
+    font-size: clamp(1.8rem, 9vw, 2.5rem);
+  }
+}
+
+/* Ajustements pour la hauteur d'écran */
+@media (max-height: 600px) {
+  .sidebar-content,
+  .welcome-content {
+    min-height: 50vh;
+    padding: 20px 15px;
+  }
+  
+  .button-container {
+    gap: 1.2rem;
+  }
+  
+  .btn-custom {
+    padding: 12px 30px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Optimisation pour les écrans très hauts (mode portrait sur tablettes) */
+@media (min-height: 1000px) and (max-width: 768px) {
+  .sidebar-content {
+    min-height: 40vh;
+  }
+  
+  .welcome-content {
+    min-height: 60vh;
+  }
+}

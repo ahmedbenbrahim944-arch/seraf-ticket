@@ -1,0 +1,190 @@
+<div class="print-container">
+  <div class="form-wrapper">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container large-form">
+      
+      <!-- Header avec titre et bouton retour -->
+      <div class="form-header">
+        <h2 class="form-title">Modifier produit</h2>
+        <button type="button" class="btn-back" (click)="onBack()" aria-label="Retour">
+          ←
+        </button>
+      </div>
+
+      <!-- Messages de succès et d'erreur -->
+      <div *ngIf="successMessage" class="success-message">
+        ✅ {{ successMessage }}
+      </div>
+      
+      <div *ngIf="serverError" class="error-message server-error">
+        ❌ {{ serverError }}
+      </div>
+
+      <!-- Indicateur de chargement principal -->
+      <div class="loading-indicator" *ngIf="isLoading">
+        <div class="loading-spinner"></div>
+        <span>Chargement des données du produit...</span>
+      </div>
+
+      <!-- Première ligne: Ligne et Référence -->
+      <div class="form-row" *ngIf="!isLoading">
+        <div class="form-group form-group-half">
+          <label class="form-label">Ligne</label>
+          <select
+            formControlName="ligne"
+            class="form-input large-input form-select"
+            [class.error]="isFieldInvalid('ligne')"
+          >
+            <option value="" disabled>Choisir une ligne</option>
+            <option *ngFor="let option of ligneOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('ligne')">
+            {{ getFieldError('ligne') }}
+          </div>
+        </div>
+
+        <div class="form-group form-group-half">
+          <label class="form-label">Référence</label>
+          <select
+            formControlName="reference"
+            class="form-input large-input form-select"
+            [class.error]="isFieldInvalid('reference')"
+            [disabled]="availableReferences.length === 0"
+          >
+            <option value="" disabled>
+              {{ availableReferences.length === 0 ? 'Sélectionner d\'abord une ligne' : 'Choisir une référence' }}
+            </option>
+            <option *ngFor="let option of availableReferences" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('reference')">
+            {{ getFieldError('reference') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Deuxième ligne: Code Produit et Date -->
+      <div class="form-row" *ngIf="!isLoading">
+        <div class="form-group form-group-half">
+          <label class="form-label">Code Produit</label>
+          <input
+            type="text"
+            formControlName="codeProduit"
+            class="form-input large-input"
+            placeholder="Entrez le code produit"
+            [class.error]="isFieldInvalid('codeProduit')"
+          />
+          <div class="error-message" *ngIf="isFieldInvalid('codeProduit')">
+            {{ getFieldError('codeProduit') }}
+          </div>
+        </div>
+
+        <div class="form-group form-group-half">
+          <label class="form-label">Date</label>
+          <input
+            type="date"
+            formControlName="date"
+            class="form-input large-input"
+            [class.error]="isFieldInvalid('date')"
+          />
+          <div class="error-message" *ngIf="isFieldInvalid('date')">
+            {{ getFieldError('date') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Troisième ligne: N° Progresse et Fournisseur -->
+      <div class="form-row" *ngIf="!isLoading">
+        <div class="form-group form-group-half">
+          <label class="form-label">N° Progresse</label>
+          <input
+            type="text"
+            formControlName="numeroProgresse"
+            class="form-input large-input"
+            placeholder="Entrez le numéro progresse"
+            [class.error]="isFieldInvalid('numeroProgresse')"
+          />
+          <div class="error-message" *ngIf="isFieldInvalid('numeroProgresse')">
+            {{ getFieldError('numeroProgresse') }}
+          </div>
+        </div>
+
+        <div class="form-group form-group-half">
+          <label class="form-label">Fournisseur</label>
+          <select
+            formControlName="fournisseur"
+            class="form-input large-input form-select"
+            [class.error]="isFieldInvalid('fournisseur')"
+          >
+            <option value="" disabled>Choisir un fournisseur</option>
+            <option *ngFor="let option of fournisseurOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('fournisseur')">
+            {{ getFieldError('fournisseur') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Quatrième ligne: Indice et Type Ticket -->
+      <div class="form-row" *ngIf="!isLoading">
+        <div class="form-group form-group-half">
+          <label class="form-label">Indice</label>
+          <input
+            type="text"
+            formControlName="indice"
+            class="form-input large-input"
+            placeholder="Entrez l'indice"
+            [class.error]="isFieldInvalid('indice')"
+          />
+          <div class="error-message" *ngIf="isFieldInvalid('indice')">
+            {{ getFieldError('indice') }}
+          </div>
+        </div>
+
+        <div class="form-group form-group-half">
+          <label class="form-label">Type Ticket</label>
+          <select
+            formControlName="typeTicket"
+            class="form-input large-input form-select"
+            [class.error]="isFieldInvalid('typeTicket')"
+          >
+            <option value="" disabled>Choisir le type de ticket</option>
+            <option *ngFor="let option of typeTicketOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('typeTicket')">
+            {{ getFieldError('typeTicket') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="button-group" *ngIf="!isLoading">
+        <button 
+          type="button" 
+          class="btn-cancel large-btn"
+          (click)="onCancel()"
+        >
+          <span>✕</span>
+          Annuler
+        </button>
+        
+        <button 
+          type="submit" 
+          class="btn-print large-btn"
+          [disabled]="isSubmitting || productForm.invalid"
+        >
+          <div class="btn-ripple"></div>
+          <span *ngIf="!isSubmitting">✓</span>
+          <span *ngIf="isSubmitting">⏳</span>
+          {{ isSubmitting ? 'Modification en cours...' : 'Modifier' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

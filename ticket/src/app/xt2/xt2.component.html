@@ -1,0 +1,335 @@
+<div class="print-container">
+  <div class="form-wrapper">
+    <div class="form-container large-form">
+      <div class="form-header">
+        <h3 class="form-title">Imprimer ticket XT2</h3>
+        <button class="btn-back" (click)="goBack()" title="Retour">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+      </div>
+
+      <!-- Section Matériels utilisés -->
+     <div class="materials-section">
+  <h4 class="materials-title">Matériels utilisés</h4>
+  <div class="materials-container">
+    <!-- RESIN RIBBON -->
+    <div class="material-item">
+      <div class="material-title"> RESIN RIBBON</div>
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/110x300-mt-ribon.jpg')">
+        <img src="assets/images/110x300-mt-ribon.jpg" 
+             alt="Energy Stand" 
+             class="material-image"
+             title="PUSH ENERGY STAND">
+      </div>
+    </div>
+    
+    <!-- Tickets -->
+    <div class="material-item">
+      <div class="material-title"> TICKETS</div>
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/ChatGPT Image 8 oct. 2025, 14_34_47.png')">
+        <img src="assets/images/ChatGPT Image 8 oct. 2025, 14_34_47.png"
+             alt="Energy Stand 2"
+             class="material-image"
+             title="PUSH ENERGY STAND">
+      </div>
+    </div>
+    
+    <!-- Ajuster tickets -->
+    <div class="material-item">
+      <div class="material-title"> AJUSTER TICKETS</div>
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/Se Connecter (1).png')">
+        <img src="assets/images/Se Connecter (1).png"
+             alt="Matériel supplémentaire"
+             class="material-image"
+             title="Matériel supplémentaire">
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- Modal pour l'image agrandie -->
+      <div class="image-modal-overlay" *ngIf="showImageModal" (click)="closeImageModal()">
+        <div class="image-modal-content" (click)="$event.stopPropagation()">
+          <button class="btn-close-modal" (click)="closeImageModal()" aria-label="Fermer l'image">
+            <i class="bi bi-x"></i>
+          </button>
+          <img [src]="selectedImage" alt="Image agrandie" class="enlarged-image">
+        </div>
+      </div>
+      <!-- 🆕 Ajoutez ceci APRÈS la section "Matériels utilisés" et AVANT le formulaire -->
+
+<!-- Avertissement de changement de semaine -->
+<div class="week-warning-banner" *ngIf="weekChangeDetected" role="alert">
+  <div class="warning-icon">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+  </div>
+  <div class="warning-content">
+    <h4 class="warning-title">⚠️ Changement de Semaine Détecté</h4>
+    <p class="warning-message">
+      Semaine actuelle : <strong>{{ weekChangeInfo.currentWeek }}</strong>
+      <i class="bi bi-arrow-right mx-2"></i>
+      Nouvelle semaine : <strong>{{ weekChangeInfo.newWeek }}</strong>
+    </p>
+    <p class="warning-detail">
+      <i class="bi bi-info-circle"></i>
+      Le numéro progressif sera automatiquement remis à <strong>0001</strong>
+    </p>
+  </div>
+</div>
+      <form (ngSubmit)="onPrint()" #printForm="ngForm">
+        <!-- Ligne -->
+        <div class="form-group">
+  <label for="selectedLigne" class="form-label">
+    Ligne <span class="required-asterisk">*</span>
+  </label>
+  <select 
+    id="selectedLigne"
+    class="form-input large-input" 
+    [(ngModel)]="selectedLigne"
+    name="selectedLigne" 
+    disabled
+    aria-disabled="true"
+    required
+    aria-required="true">
+    <option value="L29:GBXT2">L29:GBXT2</option>
+  </select>
+  <div class="form-hint">
+    Ligne prédéfinie pour XT2 - Non modifiable
+  </div>
+</div>
+
+        <!-- Référence -->
+        <div class="form-group">
+          <label for="selectedReference" class="form-label">Référence</label>
+          <select 
+            id="selectedReference"
+            class="form-input large-input" 
+            [(ngModel)]="selectedReference"
+            name="selectedReference" 
+            (change)="onReferenceChange()"
+            [disabled]="!selectedLigne"
+            required
+            aria-required="true"
+            aria-describedby="referenceError">
+            <option value="">Sélectionnez une référence</option>
+            <option *ngFor="let reference of references" [value]="reference" [attr.aria-label]="'Référence ' + reference">
+              {{ reference }}
+            </option>
+          </select>
+          <div id="referenceError" class="error-message" *ngIf="!selectedReference && errorMessage" role="alert">
+            La référence est requise
+          </div>
+        </div>
+
+        <!-- Code Produit -->
+        <div class="form-group">
+          <label for="codeProduit" class="form-label">Code Produit</label>
+          <input 
+            id="codeProduit"
+            type="text" 
+            class="form-input large-input" 
+            [(ngModel)]="codeProduit"
+            name="codeProduit" 
+            readonly
+            aria-readonly="true"
+            placeholder="Code produit auto-généré">
+        </div>
+        
+        <!-- Date -->
+        <div class="form-group">
+          <label for="selectedDate" class="form-label">Date</label>
+          <input 
+            id="selectedDate"
+            type="date" 
+            class="form-input large-input" 
+            [(ngModel)]="selectedDate"
+            name="selectedDate" 
+            required
+            aria-required="true">
+        </div>
+
+        <!-- N° Progressive -->
+        <div class="form-group">
+          <label for="numeroProgressive" class="form-label">N° Progressive</label>
+          <input 
+            id="numeroProgressive"
+            type="text" 
+            class="form-input large-input" 
+            [(ngModel)]="numeroProgressive"
+            name="numeroProgressive" 
+            readonly
+            aria-readonly="true"
+            placeholder="N° progressive auto-généré">
+        </div>
+
+        <!-- Fournisseur -->
+        <div class="form-group">
+          <label for="selectedMode" class="form-label">Fournisseur</label>
+          <select 
+            id="selectedMode"
+            class="form-input large-input" 
+            [(ngModel)]="selectedMode"
+            name="selectedMode" 
+            required
+            aria-required="true">
+            <option value="M0">M0</option>
+            <option value="M1">M1</option>
+          </select>
+        </div>
+
+        <!-- Indice -->
+        <div class="form-group">
+          <label for="indice" class="form-label">Indice</label>
+          <input 
+            id="indice"
+            type="text" 
+            class="form-input large-input" 
+            [(ngModel)]="indice"
+            name="indice" 
+            readonly
+            aria-readonly="true"
+            placeholder="Indice par défaut">
+        </div>
+
+        <!-- Quantité -->
+        <div class="form-group">
+          <label for="quantite" class="form-label">Quantité</label>
+          <input 
+            id="quantite"
+            type="number" 
+            class="form-input large-input" 
+            [(ngModel)]="quantite"
+            name="quantite" 
+            min="1"
+            required
+            aria-required="true"
+            aria-describedby="quantiteError"
+            placeholder="Nombre de tickets à imprimer">
+          <div id="quantiteError" class="error-message" *ngIf="!quantite && errorMessage" role="alert">
+            La quantité est requise
+          </div>
+        </div>
+
+        <!-- Configuration imprimante -->
+        <div class="form-group" *ngIf="availablePrinters.length > 0">
+          <label for="selectedPrinter" class="form-label">Imprimante</label>
+          <div class="printer-selection">
+            <select 
+              id="selectedPrinter"
+              class="form-input large-input" 
+              [(ngModel)]="selectedPrinter"
+              name="selectedPrinter"
+              aria-describedby="printerStatus">
+              <option value="">Sélectionnez une imprimante</option>
+              <option *ngFor="let printer of availablePrinters" [value]="printer.name">
+                {{ printer.displayName }} 
+                <span *ngIf="printer.isTSC">(TSC Compatible)</span>
+                <span *ngIf="printer.isDefault">(Par défaut)</span>
+              </option>
+            </select>
+            <button 
+              type="button" 
+              class="btn-test-printer" 
+              (click)="testSelectedPrinter()"
+              [disabled]="!selectedPrinter"
+              aria-label="Tester l'imprimante sélectionnée">
+              <i class="bi bi-printer" aria-hidden="true"></i> Test
+            </button>
+          </div>
+          <div id="printerStatus" class="printer-status" *ngIf="showPrinterTest" role="status">
+            <small [class]="printerTestResult.includes('succès') ? 'success-text' : 'error-text'">
+              {{ printerTestResult }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="button-group">
+          <button 
+            type="button" 
+            class="btn-cancel large-btn" 
+            (click)="onCancel()"
+            aria-label="Annuler l'opération">
+            <i class="bi bi-x-circle" aria-hidden="true"></i> 
+            <span>Annuler</span>
+          </button>
+          
+          <button 
+            type="submit" 
+            class="btn-print large-btn"
+             (click)="confirmPrint()"
+            [disabled]="isLoading"
+            [attr.aria-busy]="isLoading">
+            <i class="bi bi-printer" aria-hidden="true"></i>
+            <span *ngIf="!isLoading">Imprimer</span>
+            <span *ngIf="isLoading">Traitement...</span>
+          </button>
+        </div>
+        
+        <div class="error-message server-error" *ngIf="errorMessage" role="alert">
+          <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Dialogue d'impression -->
+
+
+<!-- Dialogue de résultat d'impression -->
+<div class="print-result-overlay" *ngIf="showPrintResult" role="dialog" aria-labelledby="resultDialogTitle" aria-modal="true">
+  <div class="print-result-dialog large-dialog">
+    <div class="dialog-header">
+      <h3 id="resultDialogTitle">Impression réussie XT2</h3>
+      <button class="btn-close" (click)="closePrintResult()" aria-label="Fermer le dialogue">
+        <i class="bi bi-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    
+    <div class="dialog-body">
+      <div class="print-success-message">
+        <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+        <p>{{ printResult?.data?.summary?.totalTickets }} tickets XT2 imprimés avec succès</p>
+        <small>Format: 30x15mm - Ligne: 104x15mm (3 tickets)</small>
+      </div>
+      
+      <div class="print-summary">
+        <h4>Résumé :</h4>
+        <ul>
+          <li><strong>Plage progressive :</strong> {{ printResult?.data?.summary?.progressiveRange }}</li>
+          <li><strong>Job ID :</strong> {{ printResult?.data?.printJobId }}</li>
+          <li><strong>Ligne :</strong> {{ printResult?.data?.summary?.productInfo?.ligne }}</li>
+          <li><strong>Référence :</strong> {{ printResult?.data?.summary?.productInfo?.reference }}</li>
+        </ul>
+      </div>
+      
+      <div class="tickets-preview">
+        <h4>Aperçu des tickets :</h4>
+        <div class="tickets-container">
+          <div class="ticket-item" *ngFor="let ticket of printedTickets.slice(0, 10)" role="listitem">
+            <div class="ticket-qr">
+<img [src]="ticket.codeImage" 
+     [alt]="(ticket.codeType || 'Code') + ' du ticket ' + ticket.progressiveNumber"
+     class="qr-code-image">            </div>
+            <div class="ticket-info">
+              <div class="ticket-progressive">{{ ticket.progressiveNumber }}</div>
+              <div class="ticket-fullnumber">{{ ticket.fullProductNumber }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tickets-more" *ngIf="printedTickets.length > 10">
+          <p>... et {{ printedTickets.length - 10 }} tickets supplémentaires</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dialog-footer">
+      <button class="btn-primary large-btn" (click)="closePrintResult()">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>

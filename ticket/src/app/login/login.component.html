@@ -1,0 +1,122 @@
+<!-- login.component.html -->
+<div class="login-container">
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+      <!-- Section de bienvenue -->
+      <div class="col-lg-8 col-md-7 col-sm-6 welcome-section">
+        <div class="welcome-content">
+          <div class="welcome-text">
+            <h1 class="welcome-title">
+              <span class="title-line">Bienvenue</span>
+              <span class="title-line">Connexion</span>
+            </h1>
+            <div class="decorative-elements">
+              <div class="floating-dot dot-1"></div>
+              <div class="floating-dot dot-2"></div>
+              <div class="floating-dot dot-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar avec formulaire -->
+      <div class="col-lg-4 col-md-5 col-sm-6 sidebar-section">
+        <div class="sidebar-content">
+          <div class="form-container">
+            <div class="form-header">
+              <h3 class="form-title">Connexion</h3>
+              <button class="btn-back" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+              </button>
+            </div>
+            
+            <!-- Sélecteur de type d'utilisateur -->
+            <div class="user-type-selector">
+              <div class="selector-header">
+                <span class="selector-label">Type d'utilisateur</span>
+              </div>
+              <div class="selector-buttons">
+                <button 
+                  type="button" 
+                  class="selector-btn" 
+                  [class.active]="userType === 'admin'"
+                  (click)="setUserType('admin')">
+                  <i class="bi bi-shield-check"></i>
+                  Admin
+                </button>
+                <button 
+                  type="button" 
+                  class="selector-btn" 
+                  [class.active]="userType === 'user'"
+                  (click)="setUserType('user')">
+                  <i class="bi bi-person"></i>
+                  Utilisateur
+                </button>
+              </div>
+            </div>
+            
+            <form (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  placeholder="Nom d'utilisateur" 
+                  [(ngModel)]="loginData.nom"
+                  name="nom" 
+                  required>
+                <div class="error-message" *ngIf="!loginData.nom && errorMessage">
+                  Le nom d'utilisateur est requis
+                </div>
+              </div>
+              
+              <div class="form-group password-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-input" 
+                  placeholder="Mot de passe" 
+                  [(ngModel)]="loginData.password"
+                  name="password" 
+                  required>
+                <button 
+                  type="button" 
+                  class="password-toggle"
+                  (click)="togglePasswordVisibility()">
+                  <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+                <div class="error-message" *ngIf="!loginData.password && errorMessage">
+                  Le mot de passe est requis
+                </div>
+              </div>
+              
+              <button 
+                type="submit" 
+                class="btn-submit" 
+                [disabled]="isLoading">
+                <span *ngIf="!isLoading">Se connecter</span>
+                <span *ngIf="isLoading">Connexion...</span>
+                <div class="btn-ripple"></div>
+              </button>
+              
+              <div class="error-message server-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </div>
+              
+              <div class="success-message" *ngIf="successMessage">
+                {{ successMessage }}
+              </div>
+            </form>
+            
+            <!-- Lien vers l'inscription -->
+            <div class="register-link">
+              <p>Pas de compte admin ? 
+                <a (click)="goToRegister()" class="link-register">
+                  Créer un compte
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

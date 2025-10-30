@@ -1,0 +1,232 @@
+<!-- Container principal -->
+<div class="print-container" role="main" aria-label="Gestion des utilisateurs">
+  <div class="form-wrapper">
+    
+    <!-- Formulaire d'ajout/modification -->
+    <div class="form-container large-form" *ngIf="!showUsersList" role="form" aria-labelledby="form-title">
+      <!-- En-tête du formulaire -->
+      <div class="form-header">
+        <h1 id="form-title" class="form-title">
+          {{ isEditing ? 'Modifier l\'utilisateur' : 'Ajouter un utilisateur' }}
+        </h1>
+        <button class="btn-back" (click)="goBack()" type="button" aria-label="Retour">
+          <i class="bi bi-arrow-left" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <div *ngIf="successMessage" class="success-message" role="status" aria-live="polite">
+        <i class="bi bi-check-circle" aria-hidden="true"></i>
+        <span>{{ successMessage }}</span>
+      </div>
+      
+      <div *ngIf="errorMessage" class="error-message server-error" role="alert" aria-live="assertive">
+        <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Formulaire -->
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+        
+        <!-- Champ Nom -->
+        <div class="form-group">
+          <label class="form-label" for="nom">Nom</label>
+          <input
+            type="text"
+            id="nom"
+            formControlName="nom"
+            class="form-input large-input"
+            [class.error]="hasError('nom')"
+            placeholder="Entrez le nom"
+            autocomplete="username"
+            aria-required="true"
+            aria-describedby="nom-error">
+          
+          <div *ngIf="hasError('nom')" class="error-message" id="nom-error">
+            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+            {{ getErrorMessage('nom') }}
+          </div>
+        </div>
+
+        <!-- Champ Prénom -->
+        <div class="form-group">
+          <label class="form-label" for="prenom">Prénom</label>
+          <input
+            type="text"
+            id="prenom"
+            formControlName="prenom"
+            class="form-input large-input"
+            [class.error]="hasError('prenom')"
+            placeholder="Entrez le prénom"
+            autocomplete="given-name"
+            aria-required="true"
+            aria-describedby="prenom-error">
+          
+          <div *ngIf="hasError('prenom')" class="error-message" id="prenom-error">
+            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+            {{ getErrorMessage('prenom') }}
+          </div>
+        </div>
+
+        <!-- Champ Mot de passe -->
+        <div class="form-group">
+          <label class="form-label" for="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-input large-input"
+            [class.error]="hasError('password')"
+            [placeholder]="isEditing ? 'Laissez vide pour ne pas changer' : 'Entrez le mot de passe'"
+            autocomplete="new-password"
+            [attr.aria-required]="!isEditing"
+            aria-describedby="password-help password-error">
+          
+          <div *ngIf="hasError('password')" class="error-message" id="password-error">
+            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+            {{ getErrorMessage('password') }}
+          </div>
+          <div *ngIf="isEditing" class="form-hint" id="password-help">
+            Laissez vide pour conserver le mot de passe actuel
+          </div>
+          <div *ngIf="!isEditing" class="form-hint" id="password-help">
+            Minimum 6 caractères requis
+          </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="button-group">
+          <button 
+            type="button" 
+            class="btn-cancel large-btn" 
+            (click)="cancelEdit()"
+            [attr.aria-label]="isEditing ? 'Annuler la modification' : 'Réinitialiser le formulaire'">
+            <i class="bi bi-x-circle" aria-hidden="true"></i>
+            <span>{{ isEditing ? 'Annuler' : 'Réinitialiser' }}</span>
+          </button>
+          
+          <button 
+            type="submit" 
+            class="btn-submit large-btn"
+            [disabled]="isSubmitting || userForm.invalid"
+            [attr.aria-busy]="isSubmitting">
+            <div class="btn-ripple" aria-hidden="true"></div>
+            <i class="bi" [class.bi-check]="!isSubmitting" [class.bi-arrow-repeat]="isSubmitting" aria-hidden="true"></i>
+            <span *ngIf="!isSubmitting">
+              {{ isEditing ? 'Modifier' : 'Ajouter' }}
+            </span>
+            <span *ngIf="isSubmitting">
+              {{ isEditing ? 'Modification...' : 'Ajout...' }}
+            </span>
+          </button>
+        </div>
+
+        <!-- Bouton pour voir la liste -->
+        <div class="view-list-container">
+          <button 
+            type="button" 
+            class="btn-view-list" 
+            (click)="toggleUsersList()"
+            aria-label="Voir la liste des utilisateurs">
+            <i class="bi bi-list-ul" aria-hidden="true"></i>
+            Voir tous les utilisateurs
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Liste des utilisateurs -->
+    <div class="users-list-container" *ngIf="showUsersList" role="region" aria-labelledby="list-title">
+      <div class="list-header">
+        <h1 id="list-title" class="form-title">Gestion des utilisateurs</h1>
+        <div class="header-actions">
+          <button class="btn-add-user" (click)="toggleUsersList()" aria-label="Ajouter un nouvel utilisateur">
+            <i class="bi bi-person-plus" aria-hidden="true"></i>
+            Nouvel utilisateur
+          </button>
+          <button class="btn-back" (click)="goBack()" type="button" aria-label="Retour">
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div *ngIf="successMessage" class="success-message" role="status" aria-live="polite">
+        <i class="bi bi-check-circle" aria-hidden="true"></i>
+        <span>{{ successMessage }}</span>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message server-error" role="alert" aria-live="assertive">
+        <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Tableau des utilisateurs -->
+      <div class="users-table-wrapper">
+        <div class="users-table" *ngIf="users.length > 0; else noUsers" role="table" aria-label="Liste des utilisateurs">
+          <div class="table-header" role="rowgroup">
+            <div class="table-cell" role="columnheader">ID</div>
+            <div class="table-cell" role="columnheader">Nom</div>
+            <div class="table-cell" role="columnheader">Prénom</div>
+            <div class="table-cell" role="columnheader">Statut</div>
+            <div class="table-cell" role="columnheader">Date de création</div>
+            <div class="table-cell" role="columnheader">Actions</div>
+          </div>
+          
+          <div class="table-row" *ngFor="let user of users; trackBy: trackByUserId" role="row">
+            <div class="table-cell" role="cell" data-label="ID">{{ user.id }}</div>
+            <div class="table-cell" role="cell" data-label="Nom">{{ user.nom }}</div>
+            <div class="table-cell" role="cell" data-label="Prénom">{{ user.prenom }}</div>
+            <div class="table-cell" role="cell" data-label="Statut">
+              <span class="status-badge" 
+                    [class.active]="user.isActive" 
+                    [class.inactive]="!user.isActive"
+                    [attr.aria-label]="user.isActive ? 'Utilisateur actif' : 'Utilisateur inactif'">
+                {{ user.isActive ? 'Actif' : 'Inactif' }}
+              </span>
+            </div>
+            <div class="table-cell" role="cell" data-label="Date de création">{{ formatDate(user.createdAt) }}</div>
+            <div class="table-cell actions-cell" role="cell" data-label="Actions">
+              <button class="btn-edit" (click)="editUser(user)" 
+                      [attr.aria-label]="'Modifier ' + user.prenom + ' ' + user.nom">
+                <i class="bi bi-pencil" aria-hidden="true"></i>
+              </button>
+              <button 
+                class="btn-status" 
+                [class.deactivate]="user.isActive" 
+                [class.activate]="!user.isActive"
+                (click)="toggleUserStatus(user)" 
+                [attr.aria-label]="user.isActive ? 'Désactiver ' + user.prenom + ' ' + user.nom : 'Activer ' + user.prenom + ' ' + user.nom">
+                <i class="bi" [class.bi-person-x]="user.isActive" [class.bi-person-check]="!user.isActive" aria-hidden="true"></i>
+              </button>
+              <button class="btn-delete" (click)="deleteUser(user.id)" 
+                      [attr.aria-label]="'Supprimer ' + user.prenom + ' ' + user.nom">
+                <i class="bi bi-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message si aucun utilisateur -->
+        <ng-template #noUsers>
+          <div class="no-users" role="status" aria-live="polite">
+            <div class="no-users-icon" aria-hidden="true">
+              <i class="bi bi-people"></i>
+            </div>
+            <h3>Aucun utilisateur trouvé</h3>
+            <p>Commencez par ajouter votre premier utilisateur</p>
+            <button class="btn-add-first" (click)="toggleUsersList()" aria-label="Ajouter le premier utilisateur">
+              <i class="bi bi-person-plus" aria-hidden="true"></i>
+              Ajouter le premier utilisateur
+            </button>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Information sur le nombre d'utilisateurs -->
+      <div class="users-count" *ngIf="users.length > 0" aria-live="polite">
+        <p>{{ users.length }} utilisateur{{ users.length > 1 ? 's' : '' }} au total</p>
+      </div>
+    </div>
+  </div>
+</div>

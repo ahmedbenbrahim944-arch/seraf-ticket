@@ -1,0 +1,87 @@
+<!-- sidebar.component.html -->
+<div class="print-container" role="main" aria-label="Menu d'administration">
+  
+  <!-- Titre principal -->
+  <h1 class="print-title">Administration</h1>
+  
+  <!-- Grille de boutons -->
+  <div class="buttons-grid" role="navigation" aria-label="Options d'administration">
+    
+    <!-- Bouton Statistiques -->
+    <button 
+      class="print-button"
+      role="button"
+      [class.active]="activeItem === 'statistiques'"
+      routerLink="/stat"
+      (click)="onButtonClick('statistiques', '/stat')"
+      [attr.aria-pressed]="activeItem === 'statistiques'"
+      aria-label="Voir les statistiques">
+      <span>Statistiques</span>
+      <div class="button-ripple" aria-hidden="true"></div>
+    </button>
+    
+    <!-- Bouton Ajouter Utilisateurs -->
+    <button 
+      class="print-button"
+      role="button"
+      [class.active]="activeItem === 'ajout-utilisateurs'"
+      routerLink="/ajouteruser"
+      (click)="onButtonClick('ajout-utilisateurs', '/ajouteruser')"
+      [attr.aria-pressed]="activeItem === 'ajout-utilisateurs'"
+      aria-label="Ajouter un utilisateur">
+      <span>Ajouter Utilisateurs</span>
+      <div class="button-ripple" aria-hidden="true"></div>
+    </button>
+    
+    <!-- Bouton Ajouter Produit -->
+    <button 
+      class="print-button"
+      role="button"
+      [class.active]="activeItem === 'ajouter-produit'"
+      routerLink="/ajouter"
+      (click)="onButtonClick('ajouter-produit', '/ajouter')"
+      [attr.aria-pressed]="activeItem === 'ajouter-produit'"
+      aria-label="Ajouter un produit">
+      <span>Ajouter Produit</span>
+      <div class="button-ripple" aria-hidden="true"></div>
+    </button>
+    
+    <!-- Bouton Modifier Produit -->
+    <button 
+      class="print-button"
+      role="button"
+      [class.active]="activeItem === 'modifier-produit'"
+      routerLink="/modifier"
+      (click)="onButtonClick('modifier-produit', '/modifier')"
+      [attr.aria-pressed]="activeItem === 'modifier-produit'"
+      aria-label="Modifier un produit">
+      <span>Modifier Produit</span>
+      <div class="button-ripple" aria-hidden="true"></div>
+    </button>
+  </div>
+  
+  <!-- Bouton de déconnexion -->
+  <div class="logout-container">
+    <button 
+      class="print-button logout-button"
+      role="button"
+      (click)="onLogoutClick()"
+      aria-label="Se déconnecter">
+      <span>Déconnexion</span>
+      <div class="button-ripple" aria-hidden="true"></div>
+    </button>
+  </div>
+  
+  <!-- Éléments décoratifs de fond -->
+  <div class="background-decoration" aria-hidden="true">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    
+    <div class="light-particle particle-1"></div>
+    <div class="light-particle particle-2"></div>
+    <div class="light-particle particle-3"></div>
+    <div class="light-particle particle-4"></div>
+  </div>
+  
+</div>

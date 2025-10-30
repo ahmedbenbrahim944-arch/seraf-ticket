@@ -1,0 +1,599 @@
+/* modifier-produit.component.css - Version avec animations */
+
+/* Container principal */
+.print-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2021B3 0%, #2021B3 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animation de fond améliorée */
+.print-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.3) 0%, transparent 50%);
+  animation: backgroundShift 10s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+@keyframes backgroundShift {
+  0% { 
+    transform: translateX(-15px) translateY(-15px) scale(1.02);
+  }
+  100% { 
+    transform: translateX(15px) translateY(15px) scale(1);
+  }
+}
+
+/* Wrapper pour centrer le contenu */
+.form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+/* Formulaire avec style amélioré */
+.form-container {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  padding: 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de brillance sur le formulaire */
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+.form-container:hover::before {
+  left: 100%;
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header du formulaire */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 3;
+}
+
+.form-header::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #4cd964, #34e89e);
+  box-shadow: 0 2px 8px rgba(76, 217, 100, 0.4);
+}
+
+.form-title {
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bouton retour amélioré */
+.btn-back {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  font-size: 1.3rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.btn-back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(-5px) scale(1.1);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.btn-back:hover::before {
+  left: 100%;
+}
+
+/* Styles pour les lignes de formulaire */
+.form-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group-half {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 3;
+}
+
+/* Labels améliorés */
+.form-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+/* Inputs améliorés */
+.form-input {
+  width: 100%;
+  padding: 20px 24px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  font-size: 1.15rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  box-sizing: border-box;
+  font-weight: 500;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 0 25px rgba(255, 255, 255, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Styles pour les select améliorés */
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 16px;
+  padding-right: 3.5rem;
+}
+
+.form-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-select option {
+  background: #090D75;
+  color: white;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+/* États d'erreur améliorés */
+.form-input.error {
+  border-color: rgba(255, 107, 107, 0.8);
+  background: rgba(255, 107, 107, 0.15);
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.2);
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 1rem;
+  margin-top: 0.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message::before {
+  content: '⚠';
+  font-size: 1.1rem;
+}
+
+/* Messages de statut */
+.success-message {
+  background: rgba(76, 217, 100, 0.15);
+  color: #4cd964;
+  padding: 16px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(76, 217, 100, 0.4);
+  text-align: center;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(76, 217, 100, 0.2);
+  border-radius: 4px;
+}
+
+.server-error {
+  background: rgba(255, 107, 107, 0.15);
+  color: #ff6b6b;
+  padding: 16px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  text-align: center;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+  border-radius: 4px;
+}
+
+/* Indicateur de chargement amélioré */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  color: white;
+  font-size: 1.2rem;
+  margin: 3rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  z-index: 3;
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Boutons d'action améliorés */
+.button-group {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  position: relative;
+  z-index: 3;
+}
+
+.btn-cancel {
+  flex: 1;
+  background: rgba(255, 107, 107, 0.15);
+  border: 2px solid rgba(255, 107, 107, 0.3);
+  color: white;
+  font-weight: 600;
+  font-size: 1.15rem;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cancel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 107, 107, 0.25);
+  border-color: rgba(255, 107, 107, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.btn-cancel:hover::before {
+  left: 100%;
+}
+
+.btn-print {
+  flex: 2;
+  position: relative;
+  background: linear-gradient(135deg, #4cd964, #34e89e);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(52, 232, 158, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.btn-print:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 15px 35px rgba(52, 232, 158, 0.5),
+    0 0 30px rgba(52, 232, 158, 0.3);
+}
+
+.btn-print:active:not(:disabled) {
+  transform: translateY(-1px) scale(1);
+}
+
+.btn-print:disabled {
+  background: rgba(255, 255, 255, 0.25);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Effet de ripple amélioré */
+.btn-ripple {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.6s ease-in-out;
+}
+
+.btn-print:hover .btn-ripple {
+  left: 100%;
+}
+
+/* Animation de chargement pour le bouton */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.btn-print:disabled {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Éléments décoratifs flottants */
+.decorative-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-dot {
+  position: absolute;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(120, 119, 198, 0.4));
+  opacity: 0.7;
+  filter: blur(1px);
+  border-radius: 50%;
+}
+
+.dot-1 {
+  width: 20px;
+  height: 20px;
+  top: 10%;
+  right: 10%;
+  animation: float1 8s ease-in-out infinite;
+}
+
+.dot-2 {
+  width: 15px;
+  height: 15px;
+  top: 80%;
+  left: 5%;
+  animation: float2 10s ease-in-out infinite;
+}
+
+.dot-3 {
+  width: 25px;
+  height: 25px;
+  top: 40%;
+  left: 15%;
+  animation: float3 12s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  33% { transform: translateY(-20px) translateX(-10px) rotate(120deg); }
+  66% { transform: translateY(15px) translateX(8px) rotate(240deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
+  50% { transform: translateY(-15px) translateX(10px) scale(1.2); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(15px) translateX(8px); }
+  75% { transform: translateY(-12px) translateX(-12px); }
+}
+
+/* Responsive Design amélioré */
+@media (max-width: 1024px) {
+  .form-container {
+    padding: 2.5rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .print-container {
+    padding: 1rem;
+  }
+  
+  .form-container {
+    padding: 2rem;
+    width: 95%;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .form-title {
+    font-size: 1.7rem;
+  }
+  
+  .loading-indicator {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 1.5rem;
+  }
+  
+  .form-header {
+    flex-direction: column;
+    gap: 1.2rem;
+    text-align: center;
+  }
+  
+  .btn-back {
+    align-self: flex-end;
+    margin-top: -60px;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .form-input {
+    padding: 18px 20px;
+    font-size: 1.1rem;
+  }
+  
+  .loading-indicator {
+    padding: 1.5rem;
+    font-size: 1.1rem;
+  }
+}

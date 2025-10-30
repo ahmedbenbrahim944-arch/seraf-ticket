@@ -1,0 +1,31 @@
+<div class="chxt5-container">
+  <div class="chxt5-header">
+    <h1 class="chxt5-title">L33:COM XT5</h1>
+    <button 
+      class="chxt5-back-button" 
+      (click)="goBack()"
+      type="button"
+      aria-label="Retour">
+      ←
+    </button>
+  </div>
+  
+
+  <div class="chxt5-buttons-wrapper">
+    <button 
+      class="chxt5-print-button" 
+      (click)="imprimerPar3(); createRipple($event)"
+      routerLink="/XT5"
+      type="button">
+      IMPRIMER PAR 3
+    </button>
+
+    <button 
+      class="chxt5-print-button" 
+      (click)="imprimerPar4(); createRipple($event)"
+      routerLink="/XT51"
+      type="button">
+      IMPRIMER PAR 4
+    </button>
+  </div>
+</div>

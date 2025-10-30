@@ -1,0 +1,34 @@
+# =============================================
+# Commandes TSPL générées le 18/09/2025 15:34:18
+# =============================================
+# 
+# INSTRUCTIONS POUR IMPRESSION MANUELLE:
+# 1. Connectez votre imprimante TSC via USB
+# 2. Utilisez un logiciel comme:
+#    - TSC Console (logiciel officiel TSC)
+#    - Hyperterminal / Putty
+#    - Ou copiez directement les commandes ci-dessous
+# 3. Configurez le port série (généralement COM1, COM2, etc.)
+# 4. Paramètres: 9600 bauds, 8 bits, 1 bit d'arrêt, pas de parité
+# 5. Collez les commandes TSPL ci-dessous
+#
+# =============================================
+# COMMANDES TSPL:
+# =============================================
+
+SIZE 17 mm, 10 mm
+GAP 2 mm, 0
+SPEED 4
+DENSITY 8
+REFERENCE 0,0
+SET TEAR ON
+CLS
+QRCODE 8,1,H,4,A,0,"Z38000614078M0040"
+TEXT 8,7,"2",0,1,1,"00061"
+TEXT 8,9,"1",0,1,1,"L04-RXT1-RA5246801"
+TEXT 2,24,"1",0,1,1,"1414"
+PRINT 1,1
+
+# =============================================
+# FIN DES COMMANDES
+# =============================================

@@ -1,0 +1,320 @@
+/* chXT5.component.css - Style pour le composant d'impression */
+
+.chxt5-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fond animé avec effet de grille */
+.chxt5-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, rgba(9, 13, 117, 0.03) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(9, 13, 117, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* En-tête avec titre */
+.chxt5-header {
+  margin-bottom: 80px;
+  animation: headerSlideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+@keyframes headerSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chxt5-title {
+  font-size: 56px;
+  font-weight: 900;
+  color: #090D75;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-align: center;
+  text-shadow: 0 4px 12px rgba(9, 13, 117, 0.2);
+  margin: 0;
+}
+
+/* Bouton de retour */
+.chxt5-back-button {
+  background: #090D75;
+  border: none;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 15px rgba(9, 13, 117, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.chxt5-back-button:hover {
+  background: #2021B3;
+  transform: translateX(-5px) scale(1.05);
+  box-shadow: 
+    0 6px 25px rgba(9, 13, 117, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.chxt5-back-button:active {
+  transform: translateX(-3px) scale(1);
+  transition: all 0.1s ease;
+}
+
+.chxt5-back-button:focus-visible {
+  outline: 3px solid rgba(9, 13, 117, 0.5);
+  outline-offset: 3px;
+}
+
+.chxt5-back-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Conteneur des boutons */
+.chxt5-buttons-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  animation: buttonsSlideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+}
+
+@keyframes buttonsSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Boutons d'impression - Style moderne angulaire */
+.chxt5-print-button {
+  background: linear-gradient(135deg, #090D75, #2021B3);
+  border: none;
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  padding: 45px 65px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 10px 40px rgba(9, 13, 117, 0.3),
+    0 0 0 2px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  min-width: 350px;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+}
+
+/* Effet de lumière au survol */
+.chxt5-print-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.chxt5-print-button:hover::before {
+  left: 100%;
+}
+
+.chxt5-print-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chxt5-print-button:hover::after {
+  opacity: 1;
+}
+
+.chxt5-print-button:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 60px rgba(9, 13, 117, 0.5),
+    0 0 50px rgba(32, 33, 179, 0.3),
+    0 0 0 3px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #2021B3, #4a34d4);
+}
+
+.chxt5-print-button:active {
+  transform: translateY(-4px) scale(1);
+  transition: all 0.1s ease;
+}
+
+/* Effet ripple */
+.button-ripple {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  pointer-events: none;
+  clip-path: circle(50%);
+}
+
+.chxt5-print-button:active .button-ripple {
+  animation: rippleAnimation 0.6s ease-out;
+}
+
+@keyframes rippleAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Animation au clic */
+@keyframes clickPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(9, 13, 117, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(9, 13, 117, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(9, 13, 117, 0);
+  }
+}
+
+.chxt5-print-button.clicked {
+  animation: clickPulse 0.6s ease-out;
+}
+
+/* Accessibilité */
+.chxt5-print-button:focus-visible {
+  outline: 3px solid rgba(9, 13, 117, 0.5);
+  outline-offset: 4px;
+}
+
+.chxt5-print-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chxt5-container {
+    padding: 30px 20px;
+  }
+
+  .chxt5-title {
+    font-size: 40px;
+    letter-spacing: 2px;
+  }
+
+  .chxt5-header {
+    margin-bottom: 60px;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .chxt5-back-button {
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+  }
+
+  .chxt5-buttons-wrapper {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .chxt5-print-button {
+    min-width: 100%;
+    max-width: 400px;
+    padding: 35px 50px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chxt5-title {
+    font-size: 32px;
+  }
+
+  .chxt5-header {
+    margin-bottom: 50px;
+  }
+
+  .chxt5-back-button {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+  }
+
+  .chxt5-print-button {
+    padding: 30px 40px;
+    font-size: 20px;
+  }
+}
+
+/* Mode réduit de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  .chxt5-container::before,
+  .chxt5-header,
+  .chxt5-buttons-wrapper {
+    animation: none !important;
+  }
+}

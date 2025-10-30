@@ -1,0 +1,214 @@
+<div class="statistics-container">
+  <!-- Éléments décoratifs -->
+  <div class="decorative-elements">
+    <div class="floating-dot dot-1"></div>
+    <div class="floating-dot dot-2"></div>
+    <div class="floating-dot dot-3"></div>
+    <div class="floating-dot dot-4"></div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement des statistiques...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error">
+    <p>⚠️ {{ error }}</p>
+    <button (click)="loadStatistics()" class="retry-btn">
+      🔄 Réessayer
+    </button>
+  </div>
+
+  <!-- Statistics Content -->
+  <div *ngIf="statistics && !loading" class="statistics-content">
+    
+    <!-- Header avec bouton retour -->
+    <div class="statistics-header">
+      <h1 class="header-title">📊 Statistiques d'Impression</h1>
+      <button class="btn-back-statistics" (click)="goBack()" title="Retour">
+        ← 
+      </button>
+    </div>
+
+    <!-- Filters Section -->
+   <!-- Filters Section -->
+  <div class="filters-container">
+    <button class="toggle-filters-btn" (click)="toggleFilters()">
+      <span class="filter-icon">🔍</span>
+      {{ showFilters ? 'Masquer les filtres' : 'Afficher les filtres' }}
+    </button>
+
+    <div class="filters-panel" [class.show]="showFilters">
+      
+      <!-- Période prédéfinie -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <span class="label-icon">⏱️</span>
+          Période prédéfinie
+        </label>
+        <select 
+          [(ngModel)]="selectedPeriod" 
+          (change)="onPeriodChange(selectedPeriod)"
+          class="period-select"
+        >
+          <option *ngFor="let option of periodOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Dates personnalisées (affichées seulement si "custom" est sélectionné) -->
+      <div *ngIf="selectedPeriod === 'custom'" class="custom-dates">
+        <div class="filter-group">
+          <label for="startDate" class="filter-label">
+            <span class="label-icon">📅</span>
+            Date de début
+          </label>
+          <input 
+            type="date" 
+            id="startDate" 
+            [(ngModel)]="startDate"
+            class="date-input"
+            [max]="endDate || undefined"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="endDate" class="filter-label">
+            <span class="label-icon">📅</span>
+            Date de fin
+          </label>
+          <input 
+            type="date" 
+            id="endDate" 
+            [(ngModel)]="endDate"
+            class="date-input"
+            [min]="startDate || undefined"
+          />
+        </div>
+      </div>
+
+      <!-- Info sur la période sélectionnée -->
+      <div *ngIf="startDate && endDate" class="period-summary">
+        <span class="summary-icon">📊</span>
+        <span class="summary-text">
+          Période sélectionnée : {{ getDaysBetweenDates() }} jour(s)
+        </span>
+      </div>
+
+      <!-- Message d'erreur -->
+      <div *ngIf="error" class="filter-error">
+        <span class="error-icon">⚠️</span>
+        {{ error }}
+      </div>
+
+      <!-- Actions des filtres -->
+      <div class="filter-actions">
+        <button (click)="applyFilters()" class="apply-btn" [disabled]="loading">
+          <span>✓</span> 
+          {{ loading ? 'Chargement...' : 'Appliquer' }}
+        </button>
+        <button (click)="resetFilters()" class="reset-btn" [disabled]="loading">
+          <span>↺</span> Réinitialiser
+        </button>
+      </div>
+    </div>
+  </div>
+
+    <!-- Info période -->
+    <div class="period-info" *ngIf="statistics.data.globales.periodeCouverture">
+      📅 Période : {{ formatDate(statistics.data.globales.periodeCouverture.dateDebut) }} - 
+      {{ formatDate(statistics.data.globales.periodeCouverture.dateFin) }}
+    </div>
+
+    <!-- Global Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🎫</div>
+        <div class="stat-info">
+          <h3>{{ formatNumber(statistics.data.globales.totalTicketsImprimes) }}</h3>
+          <p>Tickets Imprimés</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🖨️</div>
+        <div class="stat-info">
+          <h3>{{ formatNumber(statistics.data.globales.totalJobs) }}</h3>
+          <p>Jobs d'Impression</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📋</div>
+        <div class="stat-info">
+          <h3>{{ formatNumber(statistics.data.globales.totalReferencesUtilisees) }}</h3>
+          <p>Références Utilisées</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-info">
+          <h3>{{ statistics.data.globales.moyenneTicketsParJob }}</h3>
+          <p>Moyenne par Job</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <div class="chart-container">
+        <canvas id="typeTicketChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas id="topReferencesChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Detailed Statistics -->
+    <div class="detailed-stats">
+      
+      <!-- By Ticket Type -->
+      <div class="stats-section">
+        <h2>🎯 Statistiques par Type de Ticket</h2>
+        <div class="stats-list">
+          <div *ngFor="let type of statistics.data.parTypeTicket" class="stat-item">
+            <div class="stat-header">
+              <span class="stat-label">{{ type.typeTicket || 'Non défini' }}</span>
+              <span class="stat-value">{{ formatNumber(type.totalImprime) }} ({{ type.pourcentage }}%)</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width]="getProgressBarWidth(type.pourcentage)"></div>
+            </div>
+            <div class="stat-details">
+              📌 {{ type.nombreReferences }} référence(s) utilisée(s)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top References -->
+      <div class="stats-section">
+        <h2>🏆 Top des Références</h2>
+        <div class="top-references">
+          <div *ngFor="let ref of statistics.data.topReferences; let i = index" class="reference-item">
+            <div class="rank">{{ i + 1 }}</div>
+            <div class="ref-info">
+              <div class="ref-name">{{ ref.ligne }} - {{ ref.reference }}</div>
+              <div class="ref-type">{{ ref.typeTicket }}</div>
+            </div>
+            <div class="ref-stats">
+              <div class="ref-count">{{ formatNumber(ref.totalImprime) }} 🎫</div>
+              <div class="ref-percentage">{{ ref.pourcentage }}%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
