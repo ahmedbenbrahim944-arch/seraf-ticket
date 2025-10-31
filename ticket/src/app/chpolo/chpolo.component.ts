@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-chpolo',
   standalone: true,
@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './chpolo.component.css'
 })
 export class ChpoloComponent {
+   constructor (private router: Router,
+    ){}
   imprimerPar3(): void {
     console.log('Impression par 3 déclenchée');
     // Ajoutez ici votre logique d'impression
@@ -43,5 +45,7 @@ export class ChpoloComponent {
       ripple.remove();
     }, 600);
   }
-
+ goBack(): void {
+    this.router.navigate(['/sideus']);
+  }
 }

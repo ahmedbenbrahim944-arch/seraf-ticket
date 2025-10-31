@@ -806,8 +806,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 30vw;
+  height: 30vh;
   background: rgba(0, 0, 0, 0.95);
   display: flex;
   justify-content: center;
@@ -822,8 +822,8 @@
 
 .image-modal-content {
   position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 20vw;
+  max-height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;

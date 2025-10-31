@@ -19,9 +19,6 @@ import { T4Component } from './t4/t4.component';
 import { St7Component } from './st7/st7.component';
 import { StatistiquesComponent } from './statistiques/statistiques.component';
 import { ChXT5Component } from './chxt5/chxt5.component';
-import { Chxt7Component } from './chxt7/chxt7.component';
-import { Cht4Component } from './cht4/cht4.component';
-import { Chst7Component } from './chst7/chst7.component';
 import { Xt51Component } from './xt51/xt51.component';
 import { ChpoloComponent } from './chpolo/chpolo.component';
 import { Polo1Component } from './polo1/polo1.component';
@@ -48,9 +45,6 @@ export const routes: Routes = [
   { path: 'ST7', component: St7Component },
   { path: 'stat', component: StatistiquesComponent },
   { path: 'XT5', component: Xt5Component },
-  { path: 'CHXT7', component: Chxt7Component },
-  { path: 'CHT4', component: Cht4Component },
-  { path: 'CHT7', component: Chst7Component },
   { path: 'XT51', component: Xt51Component },
   { path: 'CHP', component: ChpoloComponent },
   { path: 'Polo1', component: Polo1Component },
