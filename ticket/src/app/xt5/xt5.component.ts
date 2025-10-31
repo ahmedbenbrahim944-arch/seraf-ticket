@@ -350,7 +350,7 @@ export class Xt5Component implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/sideus']);
+    this.router.navigate(['/CHXT5']);
   }
 
   private showSuccessNotification(message: string): void {

@@ -387,7 +387,7 @@ export class Polo1Component implements OnInit {
     }
   
     goBack(): void {
-      this.router.navigate(['/sideus']);
+      this.router.navigate(['/CHP']);
     }
   
     private showSuccessNotification(message: string): void {
