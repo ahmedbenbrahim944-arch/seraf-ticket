@@ -22,6 +22,7 @@ export class Xt7Component implements OnInit {
   selectedMode: string = 'M0';
   indice: string = '';
   quantite: number = 1;
+  matricule: string = '';
   showPositionConfig = false;
 
   defaultCodeFournisseur: string = '';
@@ -273,7 +274,8 @@ export class Xt7Component implements OnInit {
       reference: this.selectedReference,
       quantity: this.quantite,
       printDate: this.selectedDate,
-      codeFournisseur: this.selectedMode
+      codeFournisseur: this.selectedMode,
+      matricule: this.matricule || undefined 
     };
 
     try {

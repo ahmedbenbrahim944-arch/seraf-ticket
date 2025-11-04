@@ -164,6 +164,27 @@
             placeholder="N° progressive auto-généré">
         </div>
 
+        <!-- Matricule -->
+          <div class="form-group">
+            <label for="matricule" class="form-label">
+              Matricule
+            </label>
+            <select 
+              id="matricule"
+              class="form-input large-input" 
+              [(ngModel)]="matricule"
+              name="matricule"
+              aria-describedby="matriculeHint">
+              <option value="">Aucun (optionnel)</option>
+              <option value="T7">T7</option>
+            </select>
+            <div id="matriculeHint" class="form-hint">
+              Champ optionnel - Sélectionnez si nécessaire
+            </div>
+          </div>
+
+
+
         <!-- Fournisseur -->
         <div class="form-group">
           <label for="selectedMode" class="form-label">
@@ -290,7 +311,7 @@
   </div>
 </div>
 
-<!-- Dialogue d'impression -->
+
 
 
 <!-- Dialogue de résultat d'impression -->
@@ -346,5 +367,4 @@
         Fermer
       </button>
     </div>
-  </div>
-</div>
+  

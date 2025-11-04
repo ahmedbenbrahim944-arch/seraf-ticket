@@ -6,6 +6,7 @@ export interface PrintTicketRequestXt7 {
   ligne: string;
   reference: string;
   quantity: number;
+   matricule?: string; 
   printDate?: string;
   codeFournisseur?: string;
   notes?: string;
@@ -70,6 +71,9 @@ export interface PrintPositionConfig {
   productCodeX: number;
   productCodeY: number;
   productCodeFontSize?: number;
+  matriculeX?: number;      // ✅ Ajouter
+  matriculeY?: number;      // ✅ Ajouter
+  matriculeFontSize?: number; // ✅ Ajouter
   dateX?: number;
   dateY?: number;
   dateFontSize?: number;
@@ -122,6 +126,9 @@ export class PrintServiceXt7 {
     productCodeX: 56,
     productCodeY: 24,
     productCodeFontSize: 1,
+  matriculeX: 56,           // ✅ Ajouter
+  matriculeY: 40,           // ✅ Ajouter
+  matriculeFontSize: 1,
     dateX: 55,
     dateY: 55,
     dateFontSize: 1,
@@ -542,6 +549,13 @@ export class PrintServiceXt7 {
               margin-left: -0.1mm;
               margin-top:0.5mm;
             }
+
+            .matricule-info {
+              font-size: 10px;
+              color: #000;
+              line-height: 1;
+              margin-bottom: 0.5mm;
+            }
             
             @media print {
               body { 
@@ -593,6 +607,7 @@ export class PrintServiceXt7 {
         </div>
         <div class="info-section">
           <div class="progressive-number">${ticket.progressiveNumber || ''}</div>
+           <div class="matricule-info">${ticket.matricule || ''}</div>
           <div class="date-info">${formattedDate}</div>
         </div>
       </div>
