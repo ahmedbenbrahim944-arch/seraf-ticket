@@ -26,8 +26,8 @@
     <!-- Tickets -->
     <div class="material-item">
       <div class="material-title"> TICKETS</div>
-      <div class="material-image-wrapper" (click)="openImageModal('assets/images/x1t7.png')">
-        <img src="assets/images/x1t7.png"
+      <div class="material-image-wrapper" (click)="openImageModal('assets/images/st7.png')">
+        <img src="assets/images/st7.png"
              alt="Energy Stand 2"
              class="material-image"
              title="PUSH ENERGY STAND">
@@ -163,6 +163,28 @@
             aria-readonly="true"
             placeholder="N° progressive auto-généré">
         </div>
+
+         <!-- Matricule -->
+<div class="form-group">
+  <label for="matricule" class="form-label">
+    Matricule <span class="required-asterisk">*</span>
+  </label>
+  <select 
+    id="matricule"
+    class="form-input large-input" 
+    [(ngModel)]="matricule"
+    name="matricule" 
+    required
+    aria-required="true"
+    aria-describedby="matriculeError">
+    <option value="">Sélectionnez un matricule</option>
+    <option value="504">504</option>
+    <option value="1006">1006</option>
+  </select>
+  <div id="matriculeError" class="error-message" *ngIf="!matricule && errorMessage" role="alert">
+    Le matricule est requis
+  </div>
+</div>
 
         <!-- Fournisseur -->
         <div class="form-group">

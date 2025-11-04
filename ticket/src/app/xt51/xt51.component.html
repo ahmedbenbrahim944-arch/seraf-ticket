@@ -153,24 +153,26 @@
         </div>
 
         <!-- Matricule -->
-        <div class="form-group">
-          <label for="matricule" class="form-label">
-            Matricule <span class="required-asterisk">*</span>
-          </label>
-          <input 
-            id="matricule"
-            type="text" 
-            class="form-input large-input" 
-            [(ngModel)]="matricule"
-            name="matricule" 
-            required
-            aria-required="true"
-            aria-describedby="matriculeError"
-            placeholder="Votre matricule">
-          <div id="matriculeError" class="error-message" *ngIf="!matricule && errorMessage" role="alert">
-            Le matricule est requis
-          </div>
-        </div>
+<div class="form-group">
+  <label for="matricule" class="form-label">
+    Matricule <span class="required-asterisk">*</span>
+  </label>
+  <select 
+    id="matricule"
+    class="form-input large-input" 
+    [(ngModel)]="matricule"
+    name="matricule" 
+    required
+    aria-required="true"
+    aria-describedby="matriculeError">
+    <option value="">Sélectionnez un matricule</option>
+    <option value="504">504</option>
+    <option value="1006">1006</option>
+  </select>
+  <div id="matriculeError" class="error-message" *ngIf="!matricule && errorMessage" role="alert">
+    Le matricule est requis
+  </div>
+</div>
 
         <!-- N° Progressive -->
         <div class="form-group">

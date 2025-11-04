@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PrintServiceXt7,PrintTicketRequestXt7,PrinterInfo,PrintPositionConfig } from '../xt7/print.service';
+import { PrintService,PrintTicketRequest, PrinterInfo,PrintPositionConfig} from '../xt5/print.service';
 
 @Component({
   selector: 'app-st7',
@@ -22,6 +22,7 @@ export class St7Component implements OnInit {
   selectedMode: string = 'M0';
   indice: string = '';
   quantite: number = 1;
+   matricule: string = '';
   showPositionConfig = false;
 
   defaultCodeFournisseur: string = '';
@@ -65,7 +66,7 @@ export class St7Component implements OnInit {
 
   constructor(
     private router: Router,
-    private printService: PrintServiceXt7
+    private printService: PrintService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -263,12 +264,18 @@ export class St7Component implements OnInit {
   }
 
   async confirmPrint(): Promise<void> {
+    if (!this.matricule) {
+      this.errorMessage = 'Le matricule est obligatoire';
+      return;
+    }
+
     this.isLoading = true;
 
-    const printRequest: PrintTicketRequestXt7 = {
+    const printRequest: PrintTicketRequest = {
       ligne: this.selectedLigne,
       reference: this.selectedReference,
       quantity: this.quantite,
+      matricule: this.matricule,
       printDate: this.selectedDate,
       codeFournisseur: this.selectedMode,
       codeType: 'DATAMATRIX'
@@ -279,8 +286,8 @@ export class St7Component implements OnInit {
         next: (response) => {
           if (response && response.success) {
             console.log('Impression réussie:', response);
-
-             // 🆕 Vérifier changement de semaine
+            
+            // 🆕 Vérifier changement de semaine
             if (response.data.summary.weekInfo?.changed) {
               this.showSuccessNotification(
                 `Tickets imprimés - ${response.data.summary.weekInfo.message}`
@@ -290,20 +297,16 @@ export class St7Component implements OnInit {
             this.printService.setLastPrintResult(response);
             this.printResult = response;
             this.printedTickets = response.data.tickets;
-            
             this.showPrintResult = true;
             
             this.printService.printWithTSPL(response.data.tickets, this.parallelTickets)
               .then((printResponse) => {
                 if (printResponse.success) {
-                  this.showSuccessNotification(`Tickets imprimés avec succès sur ${this.selectedPrinter}`);
-                } else {
-                  this.showWarningNotification(`Impression: ${printResponse.message}`);
+                  this.showSuccessNotification(`Tickets imprimés sur ${this.selectedPrinter}`);
                 }
               })
               .catch((printError) => {
-                console.error('Erreur impression TSPL:', printError);
-                this.showWarningNotification('Tickets générés mais erreur d\'impression physique.');
+                console.error('Erreur impression:', printError);
               });
             
             this.resetForm();
@@ -320,10 +323,9 @@ export class St7Component implements OnInit {
         }
       });
     } catch (error: any) {
-      console.error('Erreur d\'impression:', error);
+      console.error('Erreur:', error);
       this.errorMessage = error.error?.message || 'Erreur lors de l\'impression';
       this.isLoading = false;
-      this.showErrorNotification(this.errorMessage);
     }
   }
 
@@ -338,6 +340,7 @@ export class St7Component implements OnInit {
       this.selectedLigne &&
       this.selectedReference &&
       this.selectedDate &&
+      this.matricule &&
       this.quantite > 0
     );
   }
@@ -357,6 +360,7 @@ export class St7Component implements OnInit {
     this.codeProduit = '';
     this.numeroProgressive = '';
     this.quantite = 1;
+    this.matricule = '';
     this.indice = '';
     this.selectedMode = 'M0';
     this.weekChangeDetected = false;
